@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
+import { useHistory } from "react-router-dom";
 
 export default function Login(props) {
   // How can we log in? What do we need to do?
@@ -7,6 +8,8 @@ export default function Login(props) {
     username: "",
     password: ""
   });
+
+  const history = useHistory();
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -19,6 +22,7 @@ export default function Login(props) {
       .post(`/api/login`, userInput)
       .then((res) => {
         window.localStorage.setItem("token", res.data.payload);
+        history.push("/profile");
       })
       .catch((err) => {
         console.log(err);
